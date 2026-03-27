@@ -24,7 +24,7 @@ module.exports.signupUser = async (req, res, next) => {
   });
 
   const token = await helper.generateToken(user.id);
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     message: "register successfully",
     data: {
@@ -39,13 +39,13 @@ module.exports.signupUser = async (req, res, next) => {
 module.exports.loginUser = async (req, res, next) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ where: { email } });
 
   if (!user) {
     return next(new ExpressError(400, "user not found with this email"));
   }
 
-  const isMatch = bcrypt.compare(password, user.password);
+  const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
     return next(new ExpressError(400, "invalid credentials"));
@@ -53,7 +53,7 @@ module.exports.loginUser = async (req, res, next) => {
 
   const token = await helper.generateToken(user.id);
 
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     message: "login successfully",
     data: {
@@ -64,4 +64,12 @@ module.exports.loginUser = async (req, res, next) => {
       },
     },
   });
+};
+
+module.exports.renderSignUpScreen = (req, res) => {
+  return res.render("auth/signup_screen");
+};
+
+module.exports.renderLoginScreen = (req, res) => {
+  return res.render("auth/login_screen");
 };
