@@ -1,3 +1,56 @@
 <% layout("/layouts/dashboard_layout") -%>
 
-<h1>category</h1>
+<div class="category-container">
+
+  <!-- Header -->
+  <div class="category-header">
+    <h1>Category Architecture</h1>
+
+    <form action="/category/create" method="get">
+      <button class="create-btn">+ Create Category</button>
+    </form>
+  </div>
+
+  <!-- Section Title -->
+  <h3 class="section-title">All Categories</h3>
+
+  <!-- Grid -->
+  <div class="category-grid ">
+    
+    <% for (let category of categories) { %>
+      
+      <div class="category-card">
+
+        <!-- Top Row -->
+        <div class="card-top">
+          <span class="type-badge <%= category.transaction_type.name.toLowerCase() %>">
+            <%= category.transaction_type.name %>
+          </span>
+
+          <div class="actions">
+            <a href="/category/edit/<%= category.id %>">✏️</a>
+            <a href="/category/delete/<%= category.id %>">🗑️</a>
+          </div>
+        </div>
+
+        <!-- Name -->
+        <h2 class="category-name">
+          <%= category.categoryName %>
+        </h2>
+
+        <!-- Color -->
+        <div class="color-row">
+          <span>Color</span>
+          <div 
+            class="color-box" 
+            style="background: <%= category.color %>;"
+          >
+          </div>
+        </div>
+
+      </div>
+
+    <% } %>
+
+  </div>
+</div>

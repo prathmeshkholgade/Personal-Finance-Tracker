@@ -1,0 +1,32 @@
+<% layout("/layouts/dashboard_layout") -%>
+
+<form action="/category/create" method="POST" class="category-form">
+  <div class="form-card">
+    <h2 class="form-title">Create Category</h2>
+
+    <div class="form-group">
+      <label>Category Name</label>
+      <input type="text" name="name" placeholder="e.g. Groceries" required />
+    </div>
+
+    <div class="form-group">
+      <label>Category Type</label>
+      <select name="typeId">
+        <% for (type of types) { %>
+        <option name="typeId" value="<%=type.id %>"><%= type.name %></option>
+    <% } %>
+      </select>
+    </div>
+
+    <div class="form-group color-group">
+      <label>Category Color</label>
+      <div class="color-picker-wrapper">
+        <input type="color" name="color" value="#3498db" />
+        <span class="color-preview"></span>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn">+ Add Category</button>
+  </div>
+</form>
+

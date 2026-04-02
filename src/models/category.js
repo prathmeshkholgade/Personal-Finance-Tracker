@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
 
       category.belongsTo(models.transaction_types, {
         foreignKey: "typeId",
-        as: "type",
       });
     }
   }
@@ -32,6 +31,10 @@ module.exports = (sequelize, DataTypes) => {
 
       categoryName: {
         type: DataTypes.STRING,
+      },
+      color: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
     },
     {

@@ -8,6 +8,9 @@ const ejs = require("ejs");
 const ejsMate = require("ejs-mate");
 const authRoutes = require("./src/routes/auth_route");
 const dashboardRoutes = require("./src/routes/dashboard_route");
+const categoriesRoutes = require("./src/routes/categories_route");
+const transactionsRoutes = require("./src/routes/transaction_route");
+
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 
@@ -40,16 +43,11 @@ app.use((req, res, next) => {
 
 app.use("/auth", authRoutes);
 app.use("/dashboard", dashboardRoutes);
+app.use("/category", categoriesRoutes);
+app.use("/transaction", transactionsRoutes);
 
-app.get("/transaction", (req, res) => {
-  return res.render("dashboard/transaction_screen");
-});
 app.get("/budget", (req, res) => {
   return res.render("dashboard/budget_screen");
-});
-
-app.get("/category", (req, res) => {
-  return res.render("dashboard/category_screen");
 });
 
 app.get("/reports", (req, res) => {

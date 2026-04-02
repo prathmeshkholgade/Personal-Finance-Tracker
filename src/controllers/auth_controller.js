@@ -25,7 +25,7 @@ module.exports.signupUser = async (req, res, next) => {
     password: hashedPassword,
   });
 
-  const token = await helper.generateToken(user.id);
+  const token = helper.generateToken(user.id);
   res.cookie("token", token, {
     httpOnly: true,
     secure: false,
