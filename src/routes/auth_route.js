@@ -12,9 +12,9 @@ const {
 } = require("../validation/auth_validation");
 const router = express.Router();
 
-router.post("/signup", validate(userSchema), signupUser);
+router.post("/signup", validate.validateSignup, signupUser);
 
-router.post("/login", validate(loginUserSchema), loginUser);
+router.post("/login", validate.validateLogin, loginUser);
 
 router.get("/signup", renderSignUpScreen);
 router.get("/login", renderLoginScreen);

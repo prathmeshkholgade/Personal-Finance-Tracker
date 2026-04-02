@@ -1,4 +1,8 @@
 const ExpressError = require("../utils/express_error");
+const {
+  loginUserSchema,
+  userSchema,
+} = require("../validation/auth_validation");
 
 module.exports = (schema) => {
   return (req, res, next) => {
@@ -11,14 +15,24 @@ module.exports = (schema) => {
   };
 };
 
-// module.exports = (schema) => (req, res, next) => {
-//   const { error } = schema.validate(req.body);
+const validateLogin = (req, res, next) => {
+  let { error, value } = loginUserSchema.validate(req.body);
+  if (error) {
+    req.flash("error", error.details[0].message);
+    return res.redirect("/auth/login");
+  }
+  req.body = value;
+  next();
+};
 
-//   if (error) {
-//     return res.status(400).json({
-//       message: error.details[0].message
-//     });
-//   }
+const validateSignup = (req, res, next) => {
+  let { error, value } = userSchema.validate(req.body);
+  if (error) {
+    req.flash("error", error.details[0].message);
+    return res.redirect("/auth/signup");
+  }
+  req.body = value;
+  next();
+};
 
-//   next();
-// };
+module.exports = { validateLogin, validateSignup };

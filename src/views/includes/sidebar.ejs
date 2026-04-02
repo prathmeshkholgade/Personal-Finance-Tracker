@@ -1,0 +1,55 @@
+<div class="sidebar">
+  <div class="logo">
+    <h3>Finance Architect</h3>
+    <p>WEALTH MANAGEMENT</p>
+  </div>
+
+  <div class="menu">
+    <a
+      href="/dashboard"
+      class="<%= currentRoute === '/dashboard' ? 'active' : '' %>"
+    >
+      <p>Dashboard</p>
+    </a>
+
+    <a
+      href="/transaction"
+      class="<%= currentRoute === '/transaction' ? 'active' : '' %>"
+    >
+      <p>Transactions</p>
+    </a>
+
+    <a href="/budget" class="<%= currentRoute === '/budget' ? 'active' : '' %>">
+      <p>Budgets</p>
+    </a>
+
+    <a
+      href="/category"
+      class="<%= currentRoute === '/category' ? 'active' : '' %>"
+    >
+      <p>Categories</p>
+    </a>
+
+    <a
+      href="/reports"
+      class="<%= currentRoute === '/reports' ? 'active' : '' %>"
+    >
+      <p>Reports</p>
+    </a>
+
+    <a
+      href="/setting"
+      class="<%= currentRoute === '/setting' ? 'active' : '' %>"
+    >
+      <p>Settings</p>
+    </a>
+  </div>
+
+  <div class="user-profile">
+    <div class="avatar"></div>
+    <div>
+      <div class="name">Julian Voss</div>
+      <div class="role">Premium Member</div>
+    </div>
+  </div>
+</div>

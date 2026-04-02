@@ -12,7 +12,9 @@ module.exports.signupUser = async (req, res, next) => {
     },
   });
   if (existingUser) {
-    return next(new ExpressError(400, "user already exist with this email"));
+    // return next(new ExpressError(400, "user already exist with this email"));
+    req.flash("error", "user already exist with this email");
+    return res.redirect("/auth/signup");
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -24,17 +26,14 @@ module.exports.signupUser = async (req, res, next) => {
   });
 
   const token = await helper.generateToken(user.id);
-  return res.status(200).json({
-    success: true,
-    message: "register successfully",
-    data: {
-      token: token,
-      user: {
-        userName: user.fullName,
-        email: user.email,
-      },
-    },
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: false,
+    expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000), // 90 days
   });
+  req.flash("success", "user register successsfully");
+
+  return res.redirect("/dashboard");
 };
 module.exports.loginUser = async (req, res, next) => {
   const { email, password } = req.body;
@@ -42,28 +41,25 @@ module.exports.loginUser = async (req, res, next) => {
   const user = await User.findOne({ where: { email } });
 
   if (!user) {
-    return next(new ExpressError(400, "user not found with this email"));
+    req.flash("error", "User not found with this email");
+    return res.redirect("/auth/login");
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
-    return next(new ExpressError(400, "invalid credentials"));
+    req.flash("error", "invalid credentials");
+    return res.redirect("/auth/login");
   }
-
   const token = await helper.generateToken(user.id);
-
-  return res.status(200).json({
-    success: true,
-    message: "login successfully",
-    data: {
-      token,
-      user: {
-        fullName: user.fullName,
-        email: user.email,
-      },
-    },
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: false,
+    expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000), // 90 days
   });
+  req.flash("success", "user login successsfully");
+
+  return res.redirect("/dashboard");
 };
 
 module.exports.renderSignUpScreen = (req, res) => {

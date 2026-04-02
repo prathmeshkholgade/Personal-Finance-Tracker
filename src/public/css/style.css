@@ -78,6 +78,127 @@
 }
 
 form {
-    width: 60%;
-    /* background-color: aquamarine; */
+  width: 60%;
+  /* background-color: aquamarine; */
 }
+
+/* /// side bar */
+/* Sidebar container */
+.sidebar {
+  width: 240px;
+  /* height: 100%; */
+  height: 100vh;
+  background-color: #f4f6f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 15px;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Logo section */
+.logo h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #2c3e50;
+}
+
+.logo p {
+  margin: 4px 0 20px;
+  font-size: 11px;
+  color: #888;
+  letter-spacing: 1px;
+}
+
+/* Menu */
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.menu p {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  color: #6c757d;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+/* Hover */
+.menu p:hover {
+  background-color: #e9ecef;
+  color: #2c3e50;
+}
+
+/* Active item */
+.menu .active {
+  background-color: #dfe9ff;
+  color: #3b5bdb;
+  font-weight: 600;
+}
+
+/* User profile */
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid #ddd;
+  padding-top: 15px;
+}
+
+/* Avatar */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ccc;
+}
+
+/* Name */
+.name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Role */
+.role {
+  font-size: 12px;
+  color: #888;
+}
+/* Remove underline from links */
+.menu a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+/* Menu item */
+.menu a p {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  color: #6c757d;
+  transition: 0.2s;
+}
+
+/* Hover */
+.menu a:hover p {
+  background-color: #e9ecef;
+  color: #2c3e50;
+}
+
+/* Active class */
+.menu a.active p {
+  background-color: #dfe9ff;
+  color: #3b5bdb;
+  font-weight: 600;
+}
+/* a{ 
+  text-decoration: none;
+  color: inherit;
+} */
