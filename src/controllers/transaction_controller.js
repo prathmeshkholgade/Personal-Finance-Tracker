@@ -1,13 +1,34 @@
 const { not } = require("joi");
 const { category, transaction_types, Transaction } = require("../models");
 module.exports.renderTransactionScreen = async (req, res) => {
+  const id = req.user;
   const transactions = await Transaction.findAll({
-    where: {
-      id: req.body,
+    attributes: {
+      exclude: ["createdAt", "updatedAt"],
     },
+    where: {
+      userId: id,
+    },
+    include: [
+      {
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+        model: category,
+        include: [
+          {
+            attributes: {
+              exclude: ["createdAt", "updatedAt"],
+            },
+            model: transaction_types,
+          },
+        ],
+      },
+    ],
   });
 
-  return res.render("dashboard/transaction_screen");
+  // res.json({ transactions });
+  return res.render("dashboard/transaction_screen", { transactions });
 };
 module.exports.renderTransactionCreateScreen = async (req, res) => {
   const id = req.user;
@@ -23,7 +44,6 @@ module.exports.renderTransactionCreateScreen = async (req, res) => {
       },
     ],
   });
-  //   res.json({ categories });
   return res.render("dashboard/create_transaction", { categories });
 };
 

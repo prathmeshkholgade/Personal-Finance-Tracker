@@ -10,6 +10,9 @@ const authRoutes = require("./src/routes/auth_route");
 const dashboardRoutes = require("./src/routes/dashboard_route");
 const categoriesRoutes = require("./src/routes/categories_route");
 const transactionsRoutes = require("./src/routes/transaction_route");
+const budgetRoutes = require("./src/routes/budget_route");
+const reportsRoute = require("./src/routes/report_route");
+const profileRoute = require("./src/routes/profile_route");
 
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
@@ -45,18 +48,9 @@ app.use("/auth", authRoutes);
 app.use("/dashboard", dashboardRoutes);
 app.use("/category", categoriesRoutes);
 app.use("/transaction", transactionsRoutes);
-
-app.get("/budget", (req, res) => {
-  return res.render("dashboard/budget_screen");
-});
-
-app.get("/reports", (req, res) => {
-  return res.render("dashboard/reports_screen");
-});
-
-app.get("/setting", (req, res) => {
-  return res.render("dashboard/setting_screen");
-});
+app.use("/budget", budgetRoutes);
+app.use("/report", reportsRoute);
+app.use("/profile", profileRoute);
 
 app.get("/", (req, res) => {
   res.send("working");

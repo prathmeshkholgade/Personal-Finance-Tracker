@@ -1,0 +1,102 @@
+<% layout("/layouts/dashboard_layout") -%>
+
+<div class="transaction-container">
+  <h2 class="title">Add Budget</h2>
+
+  <form action="/budget/create" method="POST" class="transaction-form">
+    <div class="form-group">
+      <label>Budget Name </label>
+      <textarea
+        name="budgetName"
+        rows="2"
+        placeholder="Add Budget Name..."
+        required
+      ></textarea>
+    </div>
+    <!-- Amount -->
+    <div class="form-group">
+      <label>Budget Amount</label>
+      <input type="number" name="amount" placeholder="Enter amount" required />
+    </div>
+
+    <div class="form-group">
+      <label>Category</label>
+      <select name="categoryId" required>
+        <option value="">Select Budget Category</option>
+
+           <% categories.forEach(category => { %>
+          <option value="<%= category.id %>">
+            <%= category.categoryName %> 
+            (<%= category.transaction_type.name %>)
+          </option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="filter-container">
+      <button type="button" class="filter-tab active">Monthly</button>
+
+      <button type="button" class="filter-tab">Yearly</button>
+
+      <button type="button" class="filter-tab custom" id="customBtn">
+        📅 Select Range
+      </button>
+    </div>
+
+    <!-- Hidden input -->
+    <input type="text" id="rangePicker" class="hidden-date" />
+
+    <button type="submit" class="submit-btn">+ Add Budget</button>
+  </form>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const tabs = document.querySelectorAll(".filter-tab");
+    const customBtn = document.getElementById("customBtn");
+    const rangeInput = document.getElementById("rangePicker");
+
+    // Tabs active state
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", function () {
+        tabs.forEach((t) => t.classList.remove("active"));
+        this.classList.add("active");
+      });
+    });
+
+    // Format date → 12 Apr
+    function formatDate(date) {
+      return date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+      });
+    }
+
+    // Flatpickr
+    const picker = flatpickr(rangeInput, {
+      mode: "range",
+      dateFormat: "Y-m-d",
+
+      onClose: function (dates) {
+        if (dates.length === 2) {
+          const start = formatDate(dates[0]);
+          const end = formatDate(dates[1]);
+
+          // 👉 Update button text
+          customBtn.innerHTML = `📅 ${start} - ${end}`;
+
+          console.log("Start:", dates[0]);
+          console.log("End:", dates[1]);
+
+          // 👉 Optional: API call
+          // window.location.href = `/transactions?start=${dates[0].toISOString()}&end=${dates[1].toISOString()}`;
+        }
+      },
+    });
+
+    // Open picker
+    customBtn.addEventListener("click", () => {
+      picker.open();
+    });
+  });
+</script>

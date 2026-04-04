@@ -1,7 +1,68 @@
-<% layout("/layouts/dashboard_layout") -%>
+<!-- <% layout("/layouts/dashboard_layout") -%> -->
 
-<div>
-    <form action="/transaction/create">  
-    <button>Add Transaction</button>
+
+<div class="container">
+
+  <!-- 🔷 Header -->
+  <div class="header">
+    <h1>💰 Transaction History</h1>
+
+    <form action="/transaction/create">
+      <button class="add-btn">+ Add Transaction</button>
     </form>
+  </div>
+
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterType('all')">All</button>
+    <button class="filter-btn income" onclick="filterType('Income')">Income</button>
+    <button class="filter-btn expense" onclick="filterType('Expense')">Expense</button>
+  </div>
+
+
+  <div class="transaction-list">
+    <% transactions.forEach(txn => { %>
+
+     <div class="transaction-card" data-type="<%= txn.category.transaction_type.name %>">
+   <!-- ACTION BUTTONS -->
+    <div class="actions">
+      <form action="/transaction/edit/<%= txn.id %>" method="GET">
+        <button class="btn btn-primary">✏️Edit</button>
+      </form>
+
+      <form action="/transaction/delete/<%= txn.id %>" method="POST">
+        <button class="btn btn-danger" onclick="return confirm('Delete this transaction?')">🗑️Delete</button>
+      </form>
+    </div>
+  <!-- LEFT SECTION -->
+  <div class="card-left">
+
+    <div class="icon-box" style="background:<%= txn.category.color %>20;">
+      <div class="category-dot" style="background:<%= txn.category.color %>"></div>
+    </div>
+
+    <div class="info">
+      <p class="category-name"><%= txn.category.categoryName %></p>
+      <p class="note"><%= txn.note || "No note added" %></p>
+      <p class="date"><%= new Date(txn.date).toLocaleDateString() %></p>
+    </div>
+  </div>
+
+  <!-- RIGHT SECTION -->
+  <div class="card-right">
+
+    <p class="amount <%= txn.category.transaction_type.name === 'Income' ? 'income-text' : 'expense-text' %>">
+      ₹ <%= txn.amount %>
+    </p>
+
+ 
+
+  </div>
+
 </div>
+
+    <% }) %>
+  </div>
+
+</div>
+

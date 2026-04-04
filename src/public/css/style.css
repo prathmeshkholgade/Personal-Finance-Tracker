@@ -511,3 +511,192 @@ input[type="color"] {
 .submit-btn:hover {
   background: #4f46e5;
 }
+
+/* ///t  */
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+}
+
+/* 🔷 Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+.add-btn {
+  padding: 10px 16px;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* 🔷 Filters */
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 20px;
+  background: #eee;
+  cursor: pointer;
+}
+
+.filter-btn.active {
+  background: #333;
+  color: #fff;
+}
+
+.filter-btn.income {
+  background: #d4f8e8;
+}
+
+.filter-btn.expense {
+  background: #ffe0e0;
+}
+
+.transaction-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* 🔷 Transaction Card */
+.transaction-card {
+  width: 300px;
+  /* height: 300px; */
+  display: flex;
+  /* justify-content: space-between;
+   */
+  flex-direction: column;
+  /* align-items: center;  */
+  padding: 14px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  /* background:#dcfce7;
+   */
+  /* opacity: 0.8; */
+  /* border: ; */
+  border: #111827 solid 1px;
+}
+
+/* Left */
+.left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.category-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.category-name {
+  font-weight: bold;
+  margin: 0;
+}
+
+.note {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Right */
+.right {
+  text-align: right;
+}
+
+.amount {
+  font-weight: bold;
+}
+
+.income-text {
+  color: green;
+}
+
+.expense-text {
+  color: red;
+}
+
+.date {
+  font-size: 12px;
+  color: #888;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.filter-container {
+  display: inline-flex;
+  background: #f3f4f6;
+  padding: 6px;
+  border-radius: 12px;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+/* Tabs */
+.filter-tab {
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.2s ease;
+}
+
+/* Active tab */
+.filter-tab.active {
+  background: #ffffff;
+  color: #1f2937;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Hover */
+.filter-tab:hover {
+  color: #111827;
+}
+
+/* Calendar icon */
+.calendar-icon {
+  font-size: 14px;
+}
+.custom {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.hidden-date {
+  /* position: absolute; */
+  /* display: none; */
+  opacity: 0;
+  pointer-events: none;
+}

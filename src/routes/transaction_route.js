@@ -8,10 +8,10 @@ const { verifyUser } = require("../middleware/auth_middleware");
 
 const router = express.Router();
 
-router.get("/", renderTransactionScreen);
+router.get("/", verifyUser, renderTransactionScreen);
 
-router.get("/create",verifyUser, renderTransactionCreateScreen);
+router.get("/create", verifyUser, renderTransactionCreateScreen);
 
-router.post("/create",verifyUser, createTransaction);
+router.post("/create", verifyUser, createTransaction);
 
 module.exports = router;
