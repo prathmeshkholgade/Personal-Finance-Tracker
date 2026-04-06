@@ -18,6 +18,16 @@ module.exports = (sequelize, DataTypes) => {
       category.belongsTo(models.transaction_types, {
         foreignKey: "typeId",
       });
+
+      category.hasMany(models.Budget, {
+        foreignKey: "categoryId",
+        onDelete: "CASCADE",
+      });
+
+      category.hasMany(models.Transaction, {
+        foreignKey: "categoryId",
+        onDelete: "CASCADE",
+      });
     }
   }
   category.init(
@@ -30,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       },
 
       categoryName: {
+        allowNull: false,
         type: DataTypes.STRING,
       },
       color: {

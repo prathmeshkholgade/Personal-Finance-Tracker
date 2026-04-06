@@ -1,11 +1,64 @@
 <% layout("/layouts/dashboard_layout") -%>
 
-<div class="container">
+<div class="container-budget">
   <div class="header">
     <h1>💰 Budgets & Planning</h1>
 
     <form action="/budget/create">
-      <button class="add-btn">Create budget</button>
+      <button class="add-btn">+ Create Budget</button>
     </form>
+  </div>
+
+  <!-- Budget Cards -->
+  <div class="budget-grid">
+    <% if (budgets.length === 0) { %>
+      <p class="empty-text">No budgets found</p>
+    <% } %>
+
+    <% budgets.forEach((budget) => { %>
+      <div class="budget-card">
+        
+        <div class="card-header">
+          <h3><%= budget.budgetName %></h3>
+          <span class="type <%= budget.budgetType %>">
+            <%= budget.budgetType %>
+          </span>
+        </div>
+
+        <div class="amount">
+          ₹ <%= budget.amount %>
+        </div>
+
+        <div class="category">
+          <span 
+            class="color-dot" 
+            style="background:<%= budget.category.color %>"
+          ></span>
+          <span><%= budget.category.categoryName %></span>
+        </div>
+
+        <div class="meta">
+          <span>
+            📌 <%= budget.category.transaction_type.name %>
+          </span>
+
+          <% if (budget.startDate && budget.endDate) { %>
+            <span>
+              📅 <%= budget.startDate.toDateString() %> - 
+              <%= budget.endDate.toDateString() %>
+            </span>
+          <% } %>
+        </div>
+
+        <div class="card-actions">
+          <a href="/budget/<%= budget.id %>/edit" class="edit-btn">Edit</a>
+
+          <form action="/budget/<%= budget.id %>?_method=DELETE" method="POST">
+            <button class="delete-btn">Delete</button>
+          </form>
+        </div>
+
+      </div>
+    <% }) %>
   </div>
 </div>

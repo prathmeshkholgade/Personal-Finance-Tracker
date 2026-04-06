@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       categoryId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        // onDelete:
       },
       amount: DataTypes.DECIMAL,
       note: { type: DataTypes.STRING, allowNull: true },

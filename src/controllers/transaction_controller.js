@@ -59,3 +59,53 @@ module.exports.createTransaction = async (req, res) => {
   req.flash("success", "transaction added");
   return res.redirect("/transaction");
 };
+
+module.exports.editTransaction = async (req, res) => {
+  const { id } = req.params;
+  const { categoryId, amount, date, note } = req.body;
+  const userId = req.user;
+
+  const transaction = await Transaction.findByPk(id);
+
+  if (!transaction) {
+    req.flash("error", "Transaction not found");
+    return res.redirect("/transaction");
+  }
+
+  if (transaction.userId !== userId) {
+    req.flash("error", "Not authorized");
+    return res.redirect("/transaction");
+  }
+
+  await transaction.update({
+    categoryId,
+    amount,
+    note,
+    date,
+  });
+
+  req.flash("success", "Transaction updated successfully");
+  return res.redirect("/transaction");
+};
+
+module.exports.deleteTransaction = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user;
+
+  const transaction = await Transaction.findByPk(id);
+
+  if (!transaction) {
+    req.flash("error", "Transaction not found");
+    return res.redirect("/transaction");
+  }
+
+  if (transaction.userId !== userId) {
+    req.flash("error", "Not authorized");
+    return res.redirect("/transaction");
+  }
+
+  await transaction.destroy();
+
+  req.flash("success", "Transaction deleted successfully");
+  return res.redirect("/transaction");
+};

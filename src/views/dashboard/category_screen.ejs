@@ -11,34 +11,36 @@
     </form>
   </div>
 
-  <!-- Section Title -->
   <h3 class="section-title">All Categories</h3>
 
-  <!-- Grid -->
   <div class="category-grid ">
     
     <% for (let category of categories) { %>
       
       <div class="category-card">
 
-        <!-- Top Row -->
+       
         <div class="card-top">
           <span class="type-badge <%= category.transaction_type.name.toLowerCase() %>">
             <%= category.transaction_type.name %>
           </span>
 
           <div class="actions">
-            <a href="/category/edit/<%= category.id %>">✏️</a>
-            <a href="/category/delete/<%= category.id %>">🗑️</a>
+            <a href="/category/edit/<%= category.id %>" class="btn btn-primary"> ✏️</a>
+
+            <form action="/category/<%= category.id %>?_method=DELETE"   method="post">
+               <button class="btn btn-danger">🗑️</button>  
+            </form>
+        
           </div>
         </div>
 
-        <!-- Name -->
+      
         <h2 class="category-name">
           <%= category.categoryName %>
         </h2>
 
-        <!-- Color -->
+      
         <div class="color-row">
           <span>Color</span>
           <div 

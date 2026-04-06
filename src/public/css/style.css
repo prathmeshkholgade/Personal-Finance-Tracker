@@ -700,3 +700,122 @@ input[type="color"] {
   opacity: 0;
   pointer-events: none;
 }
+
+
+
+
+/* Container */
+.container-budget {
+  padding: 20px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.add-btn {
+  background: #4f46e5;
+  color: #fff;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Grid Layout */
+.budget-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Card */
+.budget-card {
+  width: 280px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+}
+
+.budget-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Card Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.type {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #eee;
+}
+
+/* Amount */
+.amount {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #111;
+}
+
+/* Category */
+.category {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.color-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* Meta */
+.meta {
+  font-size: 13px;
+  color: #666;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Actions */
+.card-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-btn {
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: 500;
+}
+
+.delete-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Empty */
+.empty-text {
+  color: #888;
+  font-size: 14px;
+}

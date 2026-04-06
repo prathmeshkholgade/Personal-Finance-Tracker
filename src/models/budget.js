@@ -8,8 +8,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Budget.belongsTo(models.User);
-      Budget.belongsTo(models.category);
+      Budget.belongsTo(models.User, {
+        foreignKey: "userId",
+      });
+      Budget.belongsTo(models.category, {
+        foreignKey: "categoryId",
+        onDelete: "CASCADE",
+      });
       // define association here
     }
   }

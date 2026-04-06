@@ -5,6 +5,7 @@ const app = express();
 const path = require("path");
 const db = require("./src/config/db");
 const ejs = require("ejs");
+const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const authRoutes = require("./src/routes/auth_route");
 const dashboardRoutes = require("./src/routes/dashboard_route");
@@ -17,7 +18,8 @@ const profileRoute = require("./src/routes/profile_route");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 
-var flash = require("connect-flash");
+const flash = require("connect-flash");
+app.use(methodOverride("_method"));
 app.use(cookieParser());
 app.use(
   session({

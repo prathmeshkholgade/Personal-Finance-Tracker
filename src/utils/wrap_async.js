@@ -1,0 +1,3 @@
+function wrapAsync(fn) {
+    
+}
