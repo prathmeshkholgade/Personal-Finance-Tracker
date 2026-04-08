@@ -6,6 +6,7 @@ const {
   createBudget,
   editBudget,
   destoryBudget,
+  renderEditBudgetScreen,
 } = require("../controllers/budget_controller");
 const { verifyUser } = require("../middleware/auth_middleware");
 const budget = require("../models/budget");
@@ -20,8 +21,10 @@ router.get("/", verifyUser, renderBudgetScreen);
 router.get("/create", verifyUser, renderCreateBudgetScreen);
 
 router.post("/create", verifyUser, validateBudget, createBudget);
+router.get("/edit/:id", verifyUser, renderEditBudgetScreen);
 
 router.put("/edit/:id", verifyUser, validateBudget, editBudget);
+
 router.delete("/:id", verifyUser, destoryBudget);
 
 module.exports = router;

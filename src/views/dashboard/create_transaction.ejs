@@ -2,18 +2,27 @@
 
 <div class="transaction-container">
 
-  <h2 class="title">Add Transaction</h2>
+  <h2 class="title">
+    <%= transaction ? "✏️ Edit Transaction" : "➕ Add Transaction" %>
+  </h2>
 
-  <form action="/transaction/create" method="POST" class="transaction-form">
+<form 
+  action="<%= transaction ? '/transaction/edit/' + transaction.id + '?_method=PUT' : '/transaction/create' %>" 
+  method="POST" 
+  class="transaction-form"
+>
 
-    <!-- Category -->
+
     <div class="form-group">
       <label>Category</label>
       <select name="categoryId" required>
         <option value="">Select Category</option>
 
         <% categories.forEach(category => { %>
-          <option value="<%= category.id %>">
+          <option 
+            value="<%= category.id %>"
+            <%= transaction && transaction.categoryId === category.id ? "selected" : "" %>
+          >
             <%= category.categoryName %> 
             (<%= category.transaction_type.name %>)
           </option>
@@ -29,6 +38,7 @@
         type="number" 
         name="amount" 
         placeholder="Enter amount" 
+        value="<%= transaction ? transaction.amount : '' %>"
         required 
       />
     </div>
@@ -39,6 +49,7 @@
       <input 
         type="date" 
         name="date" 
+        value="<%= transaction ? new Date(transaction.date).toISOString().split('T')[0] : '' %>"
         required 
       />
     </div>
@@ -50,12 +61,12 @@
         name="note" 
         rows="3" 
         placeholder="Add description..."
-      ></textarea>
+      ><%= transaction ? transaction.note : '' %></textarea>
     </div>
 
     <!-- Submit -->
     <button type="submit" class="submit-btn">
-      + Add Transaction
+      <%= transaction ? "Update Transaction" : "+ Add Transaction" %>
     </button>
 
   </form>

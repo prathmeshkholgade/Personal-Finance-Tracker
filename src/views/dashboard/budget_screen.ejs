@@ -1,6 +1,6 @@
 <% layout("/layouts/dashboard_layout") -%>
 
-<div class="container-budget">
+<div class="container-budget" style=" margin-left: 240px; ">
   <div class="header">
     <h1>💰 Budgets & Planning</h1>
 
@@ -51,7 +51,7 @@
         </div>
 
         <div class="card-actions">
-          <a href="/budget/<%= budget.id %>/edit" class="edit-btn">Edit</a>
+          <a href="/budget/edit/<%= budget.id %>" class="edit-btn">Edit</a>
 
           <form action="/budget/<%= budget.id %>?_method=DELETE" method="POST">
             <button class="delete-btn">Delete</button>

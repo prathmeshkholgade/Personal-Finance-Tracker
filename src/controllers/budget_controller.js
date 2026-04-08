@@ -38,10 +38,38 @@ const renderCreateBudgetScreen = async (req, res) => {
       },
     ],
   });
-  return res.render("budget/create_budget", { categories });
+  return res.render("budget/create_budget", { categories, budget: null });
 };
 
-const renderEditBudgetScreen = async(req,res)=>{} 
+const renderEditBudgetScreen = async (req, res) => {
+  const { id } = req.params;
+
+  const categories = await category.findAll({
+    where: {
+      userId: req.user,
+      typeId: 2,
+    },
+    include: [{ model: transaction_types }],
+  });
+
+  const budgetData = await Budget.findOne({
+    where: {
+      id,
+      userId: req.user,
+    },
+  });
+
+  if (!budgetData) {
+    req.flash("error", "budget not found");
+    return res.redirect("/budget");
+  }
+
+  return res.render("budget/create_budget", {
+    categories,
+    budget: budgetData,
+  });
+};
+
 const createBudget = async (req, res) => {
   let { budgetName, amount, categoryId, budgetType, startDate, endDate } =
     req.body;
@@ -158,4 +186,5 @@ module.exports = {
   createBudget,
   editBudget,
   destoryBudget,
+  renderEditBudgetScreen,
 };

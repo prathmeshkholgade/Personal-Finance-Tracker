@@ -1,9 +1,16 @@
 <% layout("/layouts/dashboard_layout") -%>
 
 <div class="transaction-container">
-  <h2 class="title">Add Budget</h2>
+  <h2 class="title">
+    <%= budget ? "Edit Budget" : "Add Budget" %>
+  </h2>
 
-  <form action="/budget/create" method="POST" class="transaction-form" id="budgetForm">
+  <form 
+    action="<%= budget ? `/budget/edit/${budget.id}?_method=put` : '/budget/create' %>" 
+    method="POST" 
+    class="transaction-form" 
+    id="budgetForm"
+  >
     
     <!-- Budget Name -->
     <div class="form-group">
@@ -13,13 +20,19 @@
         rows="2"
         placeholder="Add Budget Name..."
         required
-      ></textarea>
+      ><%= budget?.budgetName || "" %></textarea>
     </div>
 
     <!-- Amount -->
     <div class="form-group">
       <label>Budget Amount</label>
-      <input type="number" name="amount" placeholder="Enter amount" required />
+      <input 
+        type="number" 
+        name="amount" 
+        placeholder="Enter amount" 
+        value="<%= budget?.amount || '' %>"
+        required 
+      />
     </div>
 
     <!-- Category -->
@@ -28,7 +41,10 @@
       <select name="categoryId" required>
         <option value="">Select Budget Category</option>
         <% categories.forEach(category => { %>
-          <option value="<%= category.id %>">
+          <option 
+            value="<%= category.id %>"
+            <%= budget && budget.categoryId === category.id ? "selected" : "" %>
+          >
             <%= category.categoryName %> 
             (<%= category.transaction_type.name %>)
           </option>
@@ -38,23 +54,46 @@
 
     <!-- Tabs -->
     <div class="filter-container">
-      <button type="button" class="filter-tab active" data-type="monthly">Monthly</button>
-      <button type="button" class="filter-tab" data-type="yearly">Yearly</button>
-      <button type="button" class="filter-tab custom" id="customBtn" data-type="range">
-        📅 Select Range
+      <button 
+        type="button"
+        class="filter-tab <%= !budget || budget.budgetType === 'monthly' ? 'active' : '' %>"
+        data-type="monthly">
+        Monthly
+      </button>
+
+      <button 
+        type="button"
+        class="filter-tab <%= budget?.budgetType === 'yearly' ? 'active' : '' %>"
+        data-type="yearly">
+        Yearly
+      </button>
+
+      <button 
+        type="button"
+        class="filter-tab custom <%= budget?.budgetType === 'range' ? 'active' : '' %>"
+        id="customBtn"
+        data-type="range">
+        
+        <% if (budget?.budgetType === "range" && budget.startDate && budget.endDate) { %>
+          📅 
+          <%= new Date(budget.startDate).toLocaleDateString("en-GB",{day:"2-digit",month:"short"}) %>
+          -
+          <%= new Date(budget.endDate).toLocaleDateString("en-GB",{day:"2-digit",month:"short"}) %>
+        <% } else { %>
+          📅 Select Range
+        <% } %>
       </button>
     </div>
 
-    <!-- Hidden Inputs -->
-    <input type="hidden" name="budgetType" id="budgetType" value="monthly" />
-    <input type="hidden" name="startDate" id="startDate" />
-    <input type="hidden" name="endDate" id="endDate" />
+    <input type="hidden" name="budgetType" id="budgetType" value="<%= budget?.budgetType || 'monthly' %>" />
+    <input type="hidden" name="startDate" id="startDate" value="<%= budget?.startDate || '' %>" />
+    <input type="hidden" name="endDate" id="endDate" value="<%= budget?.endDate || '' %>" />
 
-    <!-- Required for Flatpickr -->
     <input type="text" id="rangePicker" style="display:none;" />
 
-    <!-- Submit -->
-    <button type="submit" class="submit-btn">+ Add Budget</button>
+    <button type="submit" class="submit-btn">
+      <%= budget ? "✏️ Update Budget" : "+ Add Budget" %>
+    </button>
   </form>
 </div>
 
@@ -68,7 +107,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const startDateInput = document.getElementById("startDate");
   const endDateInput = document.getElementById("endDate");
 
-  // Format date (UI only)
   function formatDate(date) {
     return date.toLocaleDateString("en-GB", {
       day: "2-digit",
@@ -76,30 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Tab handling
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", function () {
-      tabs.forEach((t) => t.classList.remove("active"));
-      this.classList.add("active");
-
-      const type = this.getAttribute("data-type");
-      budgetTypeInput.value = type;
-
-      // Reset dates when switching
-      if (type !== "range") {
-        startDateInput.value = "";
-        endDateInput.value = "";
-        customBtn.innerHTML = "📅 Select Range";
-      }
-
-      // Open picker only for range
-      if (type === "range") {
-        picker.open();
-      }
-    });
-  });
-
-  // Flatpickr init
   const picker = flatpickr(rangeInput, {
     mode: "range",
     dateFormat: "Y-m-d",
@@ -109,24 +123,59 @@ document.addEventListener("DOMContentLoaded", function () {
         const start = dates[0];
         const end = dates[1];
 
-        // UI text
         customBtn.innerHTML = `📅 ${formatDate(start)} - ${formatDate(end)}`;
 
-        // Backend format (YYYY-MM-DD)
         startDateInput.value = start.toISOString().split("T")[0];
         endDateInput.value = end.toISOString().split("T")[0];
 
-        // Set type
         budgetTypeInput.value = "range";
 
-        // Activate tab
         tabs.forEach((t) => t.classList.remove("active"));
         customBtn.classList.add("active");
       }
     },
   });
 
-  // Submit validation
+  // Prefill edit mode
+  const existingStart = startDateInput.value;
+  const existingEnd = endDateInput.value;
+
+  if (existingStart && existingEnd) {
+    picker.setDate([existingStart, existingEnd]);
+
+    const start = new Date(existingStart);
+    const end = new Date(existingEnd);
+
+    customBtn.innerHTML = `📅 ${formatDate(start)} - ${formatDate(end)}`;
+  }
+
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", function () {
+      tabs.forEach((t) => t.classList.remove("active"));
+      this.classList.add("active");
+
+      const type = this.getAttribute("data-type");
+      budgetTypeInput.value = type;
+
+      if (type !== "range") {
+        startDateInput.value = "";
+        endDateInput.value = "";
+        customBtn.innerHTML = "📅 Select Range";
+      }
+
+      if (type === "range") {
+        picker.open();
+
+       
+        if (startDateInput.value && endDateInput.value) {
+          picker.setDate([startDateInput.value, endDateInput.value]);
+        }
+      }
+    });
+  });
+
+  
   document.getElementById("budgetForm").addEventListener("submit", function (e) {
     const type = budgetTypeInput.value;
 

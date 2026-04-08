@@ -1,9 +1,8 @@
 <!-- <% layout("/layouts/dashboard_layout") -%> -->
 
 
-<div class="container">
+<div class="container" style=" margin-left: 240px; ">
 
-  <!-- 🔷 Header -->
   <div class="header">
     <h1>💰 Transaction History</h1>
 
@@ -25,15 +24,7 @@
 
      <div class="transaction-card" data-type="<%= txn.category.transaction_type.name %>">
    <!-- ACTION BUTTONS -->
-    <div class="actions">
-      <form action="/transaction/edit/<%= txn.id %>" method="GET">
-        <button class="btn btn-primary">✏️Edit</button>
-      </form>
-
-      <form action="/transaction/delete/<%= txn.id %>" method="POST">
-        <button class="btn btn-danger" onclick="return confirm('Delete this transaction?')">🗑️Delete</button>
-      </form>
-    </div>
+   
   <!-- LEFT SECTION -->
   <div class="card-left">
 
@@ -59,8 +50,19 @@
 
   </div>
 
-</div>
 
+   <div class="card-actions">
+   
+   <a href="/transaction/edit/<%= txn.id %>" method="GET" class="edit-btn">
+     ✏️Edit
+      </a>
+      <form action="/transaction/delete/<%= txn.id %>?_method=DELETE" method="POST">
+        <button class="btn btn-danger" >Delete</button>
+      </form>
+    </div>
+ 
+</div>
+f
     <% }) %>
   </div>
 

@@ -44,7 +44,33 @@ module.exports.renderTransactionCreateScreen = async (req, res) => {
       },
     ],
   });
-  return res.render("dashboard/create_transaction", { categories });
+  return res.render("dashboard/create_transaction", {
+    categories,
+    transaction: null,
+  });
+};
+
+module.exports.renderTransactionEditScreen = async (req, res) => {
+  const id = req.user;
+  const txnId = req.params.id;
+
+  const categories = await category.findAll({
+    attributes: ["id", "categoryName", "color", "userId"],
+    where: { userId: id },
+    include: [
+      {
+        attributes: ["id", "name"],
+        model: transaction_types,
+      },
+    ],
+  });
+
+  const transactionData = await Transaction.findByPk(txnId);
+
+  return res.render("dashboard/create_transaction", {
+    categories,
+    transaction: transactionData,
+  });
 };
 
 module.exports.createTransaction = async (req, res) => {
@@ -72,7 +98,7 @@ module.exports.editTransaction = async (req, res) => {
     return res.redirect("/transaction");
   }
 
-  if (transaction.userId !== userId) {
+  if (transaction.userId != userId) {
     req.flash("error", "Not authorized");
     return res.redirect("/transaction");
   }
@@ -99,7 +125,7 @@ module.exports.deleteTransaction = async (req, res) => {
     return res.redirect("/transaction");
   }
 
-  if (transaction.userId !== userId) {
+  if (transaction.userId != userId) {
     req.flash("error", "Not authorized");
     return res.redirect("/transaction");
   }
