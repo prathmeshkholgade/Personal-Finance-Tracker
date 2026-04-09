@@ -11,7 +11,6 @@ const { Op } = require("sequelize");
 const renderDashboardScreen = async (req, res) => {
   const userId = req.user;
 
-
   const totalIncome = await Transaction.sum("amount", {
     where: { userId },
     include: [
@@ -31,7 +30,6 @@ const renderDashboardScreen = async (req, res) => {
     ],
   });
 
-  // ✅ Total Expense
   const totalExpense = await Transaction.sum("amount", {
     where: { userId },
     include: [
@@ -53,7 +51,6 @@ const renderDashboardScreen = async (req, res) => {
 
   const balance = (totalIncome || 0) - (totalExpense || 0);
 
-  // ✅ Fetch Budgets
   const budgets = await Budget.findAll({
     where: { userId },
     include: [

@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "categoryId",
         onDelete: "CASCADE",
       });
+
+      category.hasMany(models.paymentReminder, {
+        foreignKey: "categoryId",
+      });
     }
   }
   category.init(

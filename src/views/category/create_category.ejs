@@ -1,11 +1,14 @@
 <% layout("/layouts/dashboard_layout") -%>
 
 <form 
+style=" margin-left: 240px; "
   action="<%= category ? '/category/edit/' + category.id + '?_method=PUT' : '/category/create' %>" 
   method="POST" 
   class="category-form"
+  
+  
 >
-  <div class="form-card">
+  <div class="form-card " >
     <h2 class="form-title">
       <%= category ? "Edit Category" : "Create Category" %>
     </h2>

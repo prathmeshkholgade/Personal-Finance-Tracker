@@ -1,4 +1,61 @@
 <% layout("/layouts/dashboard_layout") -%>
 
-<div style=" margin-left: 240px; "></div>
-<h1>reports</h1>
+<link rel="stylesheet" href="/css/style.css" />
+
+<div class="reports-container">
+  <!-- HEADER -->
+  <div class="reports-header">
+    <h2>Financial Reports</h2>
+    <p>Detailed analytical breakdown of your financial journey.</p>
+  </div>
+
+  <!-- FILTER CARD -->
+  <div class="reports-card">
+    <h4 class="card-title">Generate Report</h4>
+
+    <form class="reports-form" action="/report/generate-report">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Report Type</label>
+          <select name="reportType">
+            <option value="income-expense">Income / Expense</option>
+            <option value="category">Category Based</option>
+            <option value="budget">Budget Based</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Start Date</label>
+          <input type="date" name="startDate" />
+        </div>
+
+        <div class="form-group">
+          <label>End Date</label>
+          <input type="date" name="endDate" />
+        </div>
+
+        <div class="form-group btn-group">
+          <button class="btn-primary">Generate</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- RESULT SECTION (UI Preview) -->
+  <div class="reports-grid">
+    <div class="report-box income">
+      <h5>Total Income</h5>
+      <p>₹<%= totalIncome%></p>
+    </div>
+
+    <div class="report-box expense">
+      <h5>Total Expense</h5>
+      <p>₹<%= totalExpense %></p>
+    </div>
+
+    <div class="report-box balance">
+      <h5>Net Balance</h5>
+      <p>₹<%= balance%></p>
+    </div>
+  </div>
+</div>

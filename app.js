@@ -14,7 +14,10 @@ const transactionsRoutes = require("./src/routes/transaction_route");
 const budgetRoutes = require("./src/routes/budget_route");
 const reportsRoute = require("./src/routes/report_route");
 const profileRoute = require("./src/routes/profile_route");
+const reminderRoute = require("./src/routes/reminder_route");
 
+const { User } = require("./src/models");
+const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 
@@ -40,6 +43,24 @@ app.use((req, res, next) => {
   res.locals.currentRoute = req.path;
   next();
 });
+
+app.use(async (req, res, next) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) {
+      res.locals.userName = null;
+      return next();
+    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const user = await User.findOne({
+      where: { id: decoded },
+    });
+    res.locals.userName = user?.fullName || null;
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
@@ -53,6 +74,7 @@ app.use("/transaction", transactionsRoutes);
 app.use("/budget", budgetRoutes);
 app.use("/report", reportsRoute);
 app.use("/profile", profileRoute);
+app.use("/reminder", reminderRoute);
 
 app.get("/", (req, res) => {
   res.send("working");

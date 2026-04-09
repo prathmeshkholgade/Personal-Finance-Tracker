@@ -1,4 +1,54 @@
 <% layout("/layouts/dashboard_layout") -%>
 
-<div style=" margin-left: 240px; "></div>
-<h1>profile</h1>
+<div class="profile-container">
+  <h2 class="profile-title">My Profile</h2>
+
+  <div class="profile-card">
+    <form action="/profile/update-profile?_method=PATCH" method="POST">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input
+          type="text"
+          name="fullName"
+          value="<%= user.fullName %>"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input
+          type="email"
+          value="<%= user.email %>"
+          readonly
+          class="readonly"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="text" name="phone" value="<%= user.phone || '' %>" />
+      </div>
+
+      <button class="btn-primary">Update Profile</button>
+    </form>
+  </div>
+
+  <div class="profile-card">
+    <h3>Change Password</h3>
+
+    <form action="/profile/change-password?_method=PATCH" method="POST">
+      <div class="form-group">
+        <label>Current Password</label>
+        <input type="password" name="currentPassword" required />
+      </div>
+
+      <div class="form-group">
+        <label>New Password</label>
+        <input type="password" name="newPassword" required />
+      </div>
+
+      <button class="btn-danger">Change Password</button>
+    </form>
+  </div>
+</div>

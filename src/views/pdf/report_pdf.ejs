@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+    }
+    .summary {
+      margin-bottom: 20px;
+    }
+    .summary div {
+      margin: 5px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background: #f4f4f4;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Financial Report</h2>
+
+  <!-- SUMMARY -->
+  <div class="summary">
+    <div><strong>Total Income:</strong> ₹<%= totalIncome %></div>
+    <div><strong>Total Expense:</strong> ₹<%= totalExpense %></div>
+    <div><strong>Net Balance:</strong> ₹<%= totalIncome - totalExpense %></div>
+  </div>
+
+  <!-- REPORT DATA -->
+  <% if (reportType === "income-expense") { %>
+
+    <h3>Transactions</h3>
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Type</th>
+        <th>Amount</th>
+      </tr>
+
+      <% result.transactionData.forEach(t => { %>
+        <tr>
+          <td><%= new Date(t.createdAt).toLocaleDateString() %></td>
+          <td><%= t.category.categoryName %></td>
+          <td><%= t.category.transaction_type.name %></td>
+          <td>₹<%= t.amount %></td>
+        </tr>
+      <% }) %>
+
+    </table>
+
+  <% } %>
+
+  <% if (reportType === "category") { %>
+
+    <h3>Category Summary</h3>
+    <table>
+      <tr>
+        <th>Category</th>
+        <th>Total</th>
+      </tr>
+
+      <% result.categoryBasedData.forEach(c => { %>
+        <tr>
+          <td><%= c["category.categoryName"] %></td>
+          <td>₹<%= c.totalAmount %></td>
+        </tr>
+      <% }) %>
+
+    </table>
+
+  <% } %>
+
+  <% if (reportType === "budget") { %>
+
+    <h3>Budget Report</h3>
+    <table>
+      <tr>
+        <th>Category</th>
+        <th>Budget</th>
+        <th>Spent</th>
+        <th>Remaining</th>
+        <th>Status</th>
+      </tr>
+
+      <% result.budgetReport.forEach(b => { %>
+        <tr>
+          <td><%= b.categoryName %></td>
+          <td>₹<%= b.budget %></td>
+          <td>₹<%= b.spent %></td>
+          <td>₹<%= b.remaining %></td>
+          <td><%= b.status %></td>
+        </tr>
+      <% }) %>
+
+    </table>
+
+  <% } %>
+
+</body>
+</html>

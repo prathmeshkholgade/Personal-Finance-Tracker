@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      
       // define association here
     }
   }
@@ -19,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: { min: 6 },
+      },
+      phone: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
     },
     {

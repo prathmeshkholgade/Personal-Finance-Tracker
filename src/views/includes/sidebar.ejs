@@ -40,12 +40,19 @@
     >
       <p>Profile</p>
     </a>
+
+    <a
+      href="/profile"
+      class="<%= currentRoute === '/profile' ? 'active' : '' %>"
+    >
+      <p>Reminder</p>
+    </a>
   </div>
 
   <div class="user-profile">
     <div class="avatar"></div>
     <div>
-      <div class="name">Julian Voss</div>
+      <div class="name"><%= userName %></div>
       <div class="role">Premium Member</div>
     </div>
   </div>
