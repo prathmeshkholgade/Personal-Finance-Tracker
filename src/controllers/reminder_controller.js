@@ -1,4 +1,4 @@
-const { PaymentReminder, category } = require("../models");
+const { paymentReminder, category, transaction_types } = require("../models");
 
 module.exports.createReminder = async (req, res) => {
   const {
@@ -10,7 +10,7 @@ module.exports.createReminder = async (req, res) => {
     categoryId,
   } = req.body;
 
-  const reminder = await PaymentReminder.create({
+  await paymentReminder.create({
     title,
     dueDate,
     frequency,
@@ -19,12 +19,13 @@ module.exports.createReminder = async (req, res) => {
     categoryId,
     userId: req.user,
   });
-
-  res.json({ success: true, reminder });
+  req.flash("success", "reminder created successfully")
+  res.redirect("/reminder");
+  // res.json({ success: true, reminder });
 };
 
 module.exports.getReminders = async (req, res) => {
-  const reminders = await PaymentReminder.findAll({
+  const reminders = await paymentReminder.findAll({
     where: { userId: req.user },
     include: [
       {
@@ -35,31 +36,87 @@ module.exports.getReminders = async (req, res) => {
     order: [["dueDate", "ASC"]],
   });
 
-  res.json({ reminders });
+
+  return res.render("reminder/reminder_screen", { reminders });
 };
 
 module.exports.updateReminder = async (req, res) => {
   const { id } = req.params;
 
-  await PaymentReminder.update(req.body, {
+  await paymentReminder.update(req.body, {
     where: {
       id,
       userId: req.user,
     },
   });
 
-  res.json({ success: true, message: "Updated successfully" });
+  req.flash("success", "Reminder updated successfully");
+  return res.redirect("/reminder");
 };
 
 module.exports.deleteReminder = async (req, res) => {
   const { id } = req.params;
 
-  await PaymentReminder.destroy({
+  await paymentReminder.destroy({
     where: {
       id,
       userId: req.user,
     },
   });
+  req.flash("success", "reminder deleted successfully")
 
-  res.json({ success: true, message: "Deleted successfully" });
+  return res.redirect("/reminder");
 };
+
+module.exports.renderCreateReminder = async (req, res) => {
+  const categories = await category.findAll({
+    where: {
+      userId: req.user,
+    },
+    include: [
+      {
+        model: transaction_types,
+        where: {
+          name: "Expense"
+        }
+      }
+    ]
+  });
+
+  return res.render("reminder/create_reminder", { categories });
+};
+
+
+
+module.exports.renderEditScreen = async (req, res) => {
+  const { id } = req.params;
+  const reminder = await paymentReminder.findOne({
+    where: {
+      id,
+      userId: req.user
+    }
+  });
+
+  if (!reminder) {
+    req.flash("error", "Reminder not found");
+    return res.redirect("/reminder");
+  }
+
+  const categories = await category.findAll({
+    where: {
+      userId: req.user,
+    },
+    include: [
+      {
+        model: transaction_types,
+        where: {
+          name: "Expense"
+        }
+      }
+    ]
+  });
+
+  return res.render("reminder/create_reminder", { categories, reminder });
+};
+
+

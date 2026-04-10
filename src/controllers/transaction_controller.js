@@ -2,7 +2,12 @@ const { not } = require("joi");
 const { category, transaction_types, Transaction } = require("../models");
 module.exports.renderTransactionScreen = async (req, res) => {
   const id = req.user;
-  const transactions = await Transaction.findAll({
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+
+  const { count, rows: transactions } = await Transaction.findAndCountAll({
+    limit: limit,
+    offset: (page - 1) * limit,
     attributes: {
       exclude: ["createdAt", "updatedAt"],
     },
@@ -27,8 +32,17 @@ module.exports.renderTransactionScreen = async (req, res) => {
     ],
   });
 
+  const totalPage = Math.ceil(count / limit);
+
+  // return res.json({
+  //   transactions,
+  //   totalTransactions: count,
+  //   totalPage,
+  //   currentPage: page
+  // });
+
   // res.json({ transactions });
-  return res.render("dashboard/transaction_screen", { transactions });
+  return res.render("dashboard/transaction_screen", { transactions, totalPage, currentPage: page, totalTransactions: count });
 };
 module.exports.renderTransactionCreateScreen = async (req, res) => {
   const id = req.user;
