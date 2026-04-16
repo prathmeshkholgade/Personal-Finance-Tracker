@@ -8,18 +8,15 @@ const {
   renderTransactionEditScreen,
 } = require("../controllers/transaction_controller");
 const { verifyUser } = require("../middleware/auth_middleware");
+const wrapAsync = require("../utils/wrap_async");
 
 const router = express.Router();
 
-router.get("/", verifyUser, renderTransactionScreen);
-
-router.get("/create", verifyUser, renderTransactionCreateScreen);
-
-router.post("/create", verifyUser, createTransaction);
-router.get("/edit/:id", verifyUser, renderTransactionEditScreen);
-router.put("/edit/:id", verifyUser, editTransaction);
-
-
-router.delete("/delete/:id", verifyUser, deleteTransaction);
+router.get("/", verifyUser, wrapAsync(renderTransactionScreen));
+router.get("/create", verifyUser, wrapAsync(renderTransactionCreateScreen));
+router.post("/create", verifyUser, wrapAsync(createTransaction));
+router.get("/edit/:id", verifyUser, wrapAsync(renderTransactionEditScreen));
+router.put("/edit/:id", verifyUser, wrapAsync(editTransaction));
+router.delete("/delete/:id", verifyUser, wrapAsync(deleteTransaction));
 
 module.exports = router;

@@ -55,7 +55,7 @@ module.exports.loginUser = async (req, res, next) => {
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
-
+  console.log(isMatch);
   if (!isMatch) {
     req.flash("error", "invalid credentials");
     return res.redirect("/auth/login");
@@ -67,7 +67,7 @@ module.exports.loginUser = async (req, res, next) => {
     expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000), // 90 days
   });
 
-  // res.locals.userName = user.fullName;
+
 
   req.flash("success", "user login successsfully");
 
@@ -107,7 +107,7 @@ module.exports.editUserInfo = async (req, res) => {
 module.exports.changePassword = async (req, res) => {
   const { currentPassword, newPassword } = req.body;
   const userId = req.user;
- 
+
   const user = await User.findByPk(userId);
 
   if (!user) {

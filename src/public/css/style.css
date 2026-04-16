@@ -89,9 +89,12 @@ form {
   height: 100vh;
   background-color: #f4f6f9;
 
-  position: fixed;   /* ✅ ADD THIS */
-  top: 0;            /* ✅ ADD THIS */
-  left: 0;           /* ✅ ADD THIS */
+  position: fixed;
+  /* ✅ ADD THIS */
+  top: 0;
+  /* ✅ ADD THIS */
+  left: 0;
+  /* ✅ ADD THIS */
 
   display: flex;
   flex-direction: column;
@@ -100,11 +103,13 @@ form {
   box-sizing: border-box;
   font-family: Arial, sans-serif;
 
-  overflow-y: auto;  
+  overflow-y: auto;
 }
+
 .dash-root {
   margin-left: 240px;
 }
+
 .logo h3 {
   margin: 0;
   font-size: 18px;
@@ -177,6 +182,7 @@ form {
   font-size: 12px;
   color: #888;
 }
+
 /* Remove underline from links */
 .menu a {
   text-decoration: none;
@@ -205,6 +211,7 @@ form {
   color: #3b5bdb;
   font-weight: 600;
 }
+
 /* a{ 
   text-decoration: none;
   color: inherit;
@@ -460,6 +467,7 @@ input[type="color"] {
   border-radius: 6px;
   border: 1px solid #ddd;
 }
+
 /* Center whole form */
 .transaction-container {
   display: flex;
@@ -525,13 +533,15 @@ input[type="color"] {
   margin: 20px auto;
   font-family: Arial, sans-serif;
 }
+
 /* // t */
 /* ========================================= */
 /* TRANSACTION SCREEN STYLES (Modern UI)     */
 /* ========================================= */
 
 .transaction-list-container {
-  margin-left: 240px; /* Offset for sidebar */
+  margin-left: 240px;
+  /* Offset for sidebar */
   padding: 40px;
   min-height: 100vh;
   background-color: #f8fafc;
@@ -592,7 +602,7 @@ input[type="color"] {
   padding: 8px;
   border-radius: 12px;
   width: fit-content;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   border: 1px solid #f1f5f9;
 }
 
@@ -613,9 +623,20 @@ input[type="color"] {
   color: white;
 }
 
-.transaction-filters .filter-btn.t-income:hover:not(.active) { background: #dcfce7; color: #166534; }
-.transaction-filters .filter-btn.t-expense:hover:not(.active) { background: #fee2e2; color: #991b1b; }
-.transaction-filters .filter-btn:hover:not(.active) { background: #f1f5f9; color: #334155; }
+.transaction-filters .filter-btn.t-income:hover:not(.active) {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.transaction-filters .filter-btn.t-expense:hover:not(.active) {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.transaction-filters .filter-btn:hover:not(.active) {
+  background: #f1f5f9;
+  color: #334155;
+}
 
 /* Grid */
 .transaction-grid {
@@ -630,7 +651,7 @@ input[type="color"] {
   border-radius: 14px;
   padding: 20px;
   border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.04);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
@@ -638,7 +659,7 @@ input[type="color"] {
 
 .txn-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 20px -4px rgba(0,0,0,0.06);
+  box-shadow: 0 12px 20px -4px rgba(0, 0, 0, 0.06);
 }
 
 .txn-card-header {
@@ -674,8 +695,15 @@ input[type="color"] {
   letter-spacing: 0.5px;
 }
 
-.txn-income { background: #dcfce7; color: #166534; }
-.txn-expense { background: #fee2e2; color: #991b1b; }
+.txn-income {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.txn-expense {
+  background: #fee2e2;
+  color: #991b1b;
+}
 
 .txn-card-body {
   flex-grow: 1;
@@ -688,8 +716,13 @@ input[type="color"] {
   letter-spacing: -0.5px;
 }
 
-.text-green { color: #10b981; }
-.text-red { color: #ef4444; }
+.text-green {
+  color: #10b981;
+}
+
+.text-red {
+  color: #ef4444;
+}
 
 .txn-note {
   display: flex;
@@ -748,47 +781,6 @@ input[type="color"] {
 
 .txn-btn-delete:hover {
   background: #fef2f2;
-}
-
-/* Pagination styling */
-.pagination-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin-top: 40px;
-  padding-bottom: 20px;
-}
-
-.page-btn {
-  padding: 8px 14px;
-  border-radius: 8px;
-  background: #ffffff;
-  color: #475569;
-  font-weight: 600;
-  font-size: 14px;
-  text-decoration: none;
-  border: 1px solid #e2e8f0;
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-.page-btn:hover:not(.disabled):not(.active) {
-  background: #f1f5f9;
-  color: #0f172a;
-}
-
-.page-btn.active {
-  background: #3b82f6;
-  color: #ffffff;
-  border-color: #3b82f6;
-  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
-}
-
-.page-btn.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  background: #f8fafc;
 }
 
 
@@ -1145,7 +1137,8 @@ input[type="color"] {
   align-items: center;
   min-height: 80vh;
   width: 100%;
-  margin-left: 240px; /* offset for sidebar */
+  margin-left: 240px;
+  /* offset for sidebar */
 }
 
 .reminder-form {
@@ -1230,7 +1223,8 @@ input[type="color"] {
 
 
 .reminder-list-container {
-  margin-left: 240px; /* Offset for sidebar */
+  margin-left: 240px;
+  /* Offset for sidebar */
   padding: 40px;
   min-height: 100vh;
   background-color: #f8fafc;
@@ -1327,7 +1321,8 @@ input[type="color"] {
 /* Reminder Grid layout */
 .reminder-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* smaller minmax for more in a row */
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  /* smaller minmax for more in a row */
   gap: 20px;
 }
 
@@ -1374,11 +1369,30 @@ input[type="color"] {
 }
 
 /* Frequency color mapping */
-.rm-frequency.monthly { background: #dbeafe; color: #1e40af; }
-.rm-frequency.once { background: #fee2e2; color: #991b1b; }
-.rm-frequency.weekly { background: #dcfce7; color: #166534; }
-.rm-frequency.yearly { background: #fef3c7; color: #92400e; }
-.rm-frequency.quarterly { background: #f3e8ff; color: #6b21a8; }
+.rm-frequency.monthly {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.rm-frequency.once {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.rm-frequency.weekly {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.rm-frequency.yearly {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.rm-frequency.quarterly {
+  background: #f3e8ff;
+  color: #6b21a8;
+}
 
 .rm-card-body {
   flex-grow: 1;

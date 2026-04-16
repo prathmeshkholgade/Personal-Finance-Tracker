@@ -2,13 +2,14 @@ const express = require("express");
 const { verifyUser } = require("../middleware/auth_middleware");
 const router = express.Router();
 const reminderController = require("../controllers/reminder_controller");
-router.get("/", verifyUser, reminderController.getReminders);
-router.get("/create", verifyUser, reminderController.renderCreateReminder);
+const wrapAsync = require("../utils/wrap_async");
+router.get("/", verifyUser, wrapAsync(reminderController.getReminders));
+router.get("/create", verifyUser, wrapAsync(reminderController.renderCreateReminder));
 
-router.post("/create", verifyUser, reminderController.createReminder);
+router.post("/create", verifyUser, wrapAsync(reminderController.createReminder));
 
-router.get("/edit/:id", verifyUser, reminderController.renderEditScreen);
-router.put("/edit/:id", verifyUser, reminderController.updateReminder);
-router.delete("/delete/:id", verifyUser, reminderController.deleteReminder);
+router.get("/edit/:id", verifyUser, wrapAsync(reminderController.renderEditScreen));
+router.put("/edit/:id", verifyUser, wrapAsync(reminderController.updateReminder));
+router.delete("/delete/:id", verifyUser, wrapAsync(reminderController.deleteReminder));
 
 module.exports = router;

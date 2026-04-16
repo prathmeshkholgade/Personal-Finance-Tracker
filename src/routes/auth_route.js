@@ -13,11 +13,12 @@ const {
   loginUserSchema,
 } = require("../validation/auth_validation");
 const { verifyUser } = require("../middleware/auth_middleware");
+const wrapAsync = require("../utils/wrap_async");
 const router = express.Router();
 
-router.post("/signup", validate.validateSignup, signupUser);
+router.post("/signup", validate.validateSignup, wrapAsync(signupUser));
 
-router.post("/login", validate.validateLogin, loginUser);
+router.post("/login", validate.validateLogin, wrapAsync(loginUser));
 
 router.get("/signup", renderSignUpScreen);
 router.get("/login", renderLoginScreen);
